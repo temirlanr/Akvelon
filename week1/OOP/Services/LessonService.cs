@@ -17,6 +17,16 @@ namespace OOP.Services
     {
         public bool CreateLesson(Course course, Lesson lesson)
         {
+            if(course.CourseName == null || course.CourseName == String.Empty || course == null)
+            {
+                throw new ArgumentNullException("Course name null");
+            }
+
+            if(lesson.LessonName == null || lesson.LessonName == String.Empty || lesson == null)
+            {
+                throw new ArgumentNullException("Lesson name null");
+            }
+
             course.CourseLessons.Add(lesson);
             lesson.LessonCourse = course;
 

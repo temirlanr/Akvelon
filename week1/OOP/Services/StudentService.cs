@@ -17,12 +17,19 @@ namespace OOP.Services
     {
         public bool AddStudentToCourse(Course course, Student student)
         {
-            if(student.StudentName == null)
+            if(student.StudentName == null || student.StudentName == String.Empty || student == null)
             {
-                throw new ArgumentNullException("Student name null");
+                throw new ArgumentNullException("Student null");
             }
+
+            if(course.CourseName == null || course.CourseName == String.Empty || course == null)
+            {
+                throw new ArgumentNullException("Course null");
+            }
+
             course.CourseStudents.Add(student, null);
             student.StudentLessons = course.CourseLessons;
+            
             return true;
         }
 

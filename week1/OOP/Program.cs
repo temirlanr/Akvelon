@@ -56,10 +56,13 @@ namespace OOP
 
             studentService.AddStudentToCourse(courses[0], students[0]);
             studentService.AddStudentToCourse(courses[0], students[1]);
+            teacherService.GiveCourseScore(students[0], courses[0], 67);
+            teacherService.GiveCourseScore(students[1], courses[0], 80);
 
-            foreach(var student in courses[0].CourseStudents)
+            foreach (var student in courses[0].CourseStudents)
             {
                 Console.WriteLine(student.Key.StudentName);
+                Console.WriteLine(student.Value);
             }
         }
     }

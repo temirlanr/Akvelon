@@ -19,10 +19,16 @@ namespace OOP.Services
     {
         public bool AddCourseToTeacher(Teacher teacher, Course course)
         {
-            if(teacher.TeacherName == null)
+            if (teacher.TeacherName == null || teacher.TeacherName == String.Empty || teacher == null)
             {
-                throw new ArgumentNullException("Teacher name null");
+                throw new ArgumentNullException("Teacher null");
             }
+
+            if (course.CourseName == null || course.CourseName == String.Empty || course == null)
+            {
+                throw new ArgumentNullException("Course null");
+            }
+
             teacher.TeacherCourses.Add(course);
             course.CourseTeacher = teacher;
 
@@ -31,6 +37,16 @@ namespace OOP.Services
 
         public bool GiveCourseScore(Student student, Course course, int score)
         {
+            if (student.StudentName == null || student.StudentName == String.Empty || student == null)
+            {
+                throw new ArgumentNullException("Student null");
+            }
+
+            if (course.CourseName == null || course.CourseName == String.Empty || course == null)
+            {
+                throw new ArgumentNullException("Course null");
+            }
+
             if (score < 0 && score > 100)
             {
                 throw new Exception("Score not in range 0-100");

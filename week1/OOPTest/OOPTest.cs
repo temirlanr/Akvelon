@@ -34,9 +34,7 @@ namespace OOPTest
 
             Action act = () => studentService.AddStudentToCourse(course, student);
 
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(act);
-
-            Assert.Equal("error message: ", exception.Message);
+            Assert.Throws<ArgumentNullException>(act);
         }
 
         [Fact]
@@ -54,6 +52,52 @@ namespace OOPTest
             bool res = teacherService.GiveCourseScore(student, course, 76);
 
             Assert.True(res);
+        }
+
+        [Fact]
+        public void CreateLesson_Mathsnull_ThrowsArgumentNullException()
+        {
+            ILessonService lessonService = new LessonService();
+
+            Course course = new Course();
+            course.CourseName = "Maths";
+            Lesson lesson = new Lesson();
+            lesson.LessonName = null;
+
+            Action act = () => lessonService.CreateLesson(course, lesson);
+
+            Assert.Throws<ArgumentNullException>(act);
+        }
+
+        [Fact]
+        public void RemoveStudentFromCourse_JohnMaths_True()
+        {
+            IStudentService studentService = new StudentService();
+
+            Student student = new Student();
+            student.StudentName = "John";
+            Course course = new Course();
+            course.CourseName = "Maths";
+
+            studentService.AddStudentToCourse(course, student);
+            bool res = studentService.RemoveStudentFromCourse(course, student);
+
+            Assert.True(res);
+        }
+
+        [Fact]
+        public void AddCourseToTeacher_ScottStringEmpty_ThrowsArgumentNullException()
+        {
+            ITeacherService teacherService = new TeacherService();
+
+            Teacher teacher = new Teacher();
+            teacher.TeacherName = "Scott";
+            Course course = new Course();
+            course.CourseName = String.Empty;
+
+            Action act = () => teacherService.AddCourseToTeacher(teacher, course);
+
+            Assert.Throws<ArgumentNullException>(act);
         }
     }
 }
