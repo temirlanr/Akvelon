@@ -1,5 +1,4 @@
-﻿using OOP.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,22 +8,11 @@ namespace OOP.Services
 {
     public interface ICourseService
     {
-        void CreateCourse(Course course);
-        void DeleteCourse(Course course);
+        // Created for possible future necessity
     }
 
     public class CourseService : ICourseService
     {
-        private List<Course> courseData = new List<Course>();
-
-        public void CreateCourse(Course course)
-        {
-            courseData.Add(course);
-        }
-
-        public void DeleteCourse(Course course)
-        {
-            courseData.Remove(course);
-        }
+        // Created for possible future necessity
     }
 }

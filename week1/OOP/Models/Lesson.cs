@@ -8,8 +8,8 @@ namespace OOP.Models
 {
     public class Lesson
     {
-        public string LessonName;
-        public Dictionary<Student, int?> LessonStudents;
-        public Course? LessonCourse;
+        public string LessonName { get; set; }
+        public Dictionary<Student, int?> LessonStudents { get; set; } = new Dictionary<Student, int?>();
+        public Course? LessonCourse { get; set; }
     }
 }

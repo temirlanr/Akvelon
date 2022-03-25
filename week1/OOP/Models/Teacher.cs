@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OOP.Models
-{ 
+{
     public class Teacher
     {
-        public string TeacherName;
-        public List<Course> TeacherCourses;
+        public string TeacherName { get; set; }
+        public List<Course> TeacherCourses { get; set; } = new List<Course>();
     }
 }

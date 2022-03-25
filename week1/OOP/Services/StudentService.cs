@@ -9,36 +9,33 @@ namespace OOP.Services
 {
     public interface IStudentService
     {
-        void CreateStudent(Student student);
-        void DeleteStudent(Student student);
-        void AddStudentToCourse(Course course, Student student);
-        void RemoveStudentFromCourse(Course course, Student student);
+        bool AddStudentToCourse(Course course, Student student);
+        bool RemoveStudentFromCourse(Course course, Student student);
     }
 
     public class StudentService : IStudentService
     {
-        private List<Student> studentData = new List<Student>();
-
-        public void AddStudentToCourse(Course course, Student student)
+        public bool AddStudentToCourse(Course course, Student student)
         {
+            if(student.StudentName == null)
+            {
+                throw new ArgumentNullException("Student name null");
+            }
             course.CourseStudents.Add(student, null);
             student.StudentLessons = course.CourseLessons;
+            return true;
         }
 
-        public void CreateStudent(Student student)
+        public bool RemoveStudentFromCourse(Course course, Student student)
         {
-            studentData.Add(student);
-        }
+            if (course.CourseStudents.Count > 0)
+            {
+                course.CourseStudents.Remove(student);
+            }
 
-        public void DeleteStudent(Student student)
-        {
-            studentData.Remove(student);
-        }
+            student.StudentLessons = new List<Lesson>();
 
-        public void RemoveStudentFromCourse(Course course, Student student)
-        {
-            course.CourseStudents.Remove(student);
-            student.StudentLessons = null;
+            return true;
         }
     }
 }

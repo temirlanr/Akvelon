@@ -8,9 +8,9 @@ namespace OOP.Models
 {
     public class Course
     {
-        public string CourseName;
-        public Dictionary<Student, int?> CourseStudents;
-        public List<Lesson> CourseLessons;
-        public Teacher? CourseTeacher;
+        public string CourseName { get; set; }
+        public Dictionary<Student, int?> CourseStudents { get; set; } = new Dictionary<Student, int?>();
+        public List<Lesson> CourseLessons { get; set; } = new List<Lesson>();
+        public Teacher? CourseTeacher { get; set; }
     }
 }

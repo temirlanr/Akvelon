@@ -9,48 +9,60 @@ namespace OOP.Services
 {
     public interface ITeacherService
     {
-        void CreateTeacher(Teacher teacher);
-        void DeleteTeacher(Teacher teacher);
-        void AddCourseToTeacher(Teacher teacher, Course course);
-        void RemoveCourseFromTeacher(Teacher teacher, Course course);
-        void GiveCourseScore(Student student, Course course, int score);
-        void GiveLessonScore(Student student, Lesson lesson, int score);
+        bool AddCourseToTeacher(Teacher teacher, Course course);
+        bool RemoveCourseFromTeacher(Teacher teacher, Course course);
+        bool GiveCourseScore(Student student, Course course, int score);
+        bool GiveLessonScore(Student student, Lesson lesson, int score);
     }
 
     public class TeacherService : ITeacherService
     {
-        private List<Teacher> teacherData = new List<Teacher>();
-
-        public void AddCourseToTeacher(Teacher teacher, Course course)
+        public bool AddCourseToTeacher(Teacher teacher, Course course)
         {
+            if(teacher.TeacherName == null)
+            {
+                throw new ArgumentNullException("Teacher name null");
+            }
             teacher.TeacherCourses.Add(course);
             course.CourseTeacher = teacher;
+
+            return true;
         }
 
-        public void CreateTeacher(Teacher teacher)
+        public bool GiveCourseScore(Student student, Course course, int score)
         {
-            teacherData.Add(teacher);
-        }
+            if (score < 0 && score > 100)
+            {
+                throw new Exception("Score not in range 0-100");
+            }
 
-        public void GiveCourseScore(Student student, Course course, int score)
-        {
             course.CourseStudents[student] = score;
+
+            return true;
         }
 
-        public void GiveLessonScore(Student student, Lesson lesson, int score)
+        public bool GiveLessonScore(Student student, Lesson lesson, int score)
         {
+            if (score < 0 && score > 100)
+            {
+                throw new Exception("Score not in range 0-100");
+            }
+
             lesson.LessonStudents[student] = score;
+
+            return true;
         }
 
-        public void RemoveCourseFromTeacher(Teacher teacher, Course course)
+        public bool RemoveCourseFromTeacher(Teacher teacher, Course course)
         {
-            teacher.TeacherCourses.Remove(course);
+            if (teacher.TeacherCourses.Count > 0)
+            {
+                teacher.TeacherCourses.Remove(course);
+            }
+
             course.CourseTeacher = null;
-        }
 
-        public void DeleteTeacher(Teacher teacher)
-        {
-            teacherData.Remove(teacher);
+            return true;
         }
     }
 }
