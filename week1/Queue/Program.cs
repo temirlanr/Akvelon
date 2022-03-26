@@ -6,22 +6,39 @@ namespace Queue
     {
         public static void Main(string[] args)
         {
-            IQueue<int> mq = new Queue<int>();
+            IQueue<string> aq = new ArrayQueue<string>();
 
-            Console.WriteLine(mq.Dequeue().ToString());
-            mq.Enqueue(1);
-            mq.Print();
-            mq.Enqueue(2);
-            mq.Print();
-            mq.Enqueue(3);
-            mq.Print();
-            mq.Enqueue(4);
-            mq.Print();
-            Console.WriteLine(mq.Dequeue().ToString());
-            mq.Print();
-            Console.WriteLine(mq.Dequeue().ToString());
-            mq.Print();
-            Console.WriteLine(mq.Peek().ToString());
+            Console.WriteLine(aq.Dequeue());
+            aq.Enqueue("first");
+            aq.Print();
+            aq.Enqueue("second");
+            aq.Print();
+            aq.Enqueue("third");
+            aq.Print();
+            aq.Enqueue("forth");
+            aq.Print();
+            Console.WriteLine(aq.Dequeue());
+            aq.Print();
+            Console.WriteLine(aq.Dequeue());
+            aq.Print();
+            Console.WriteLine(aq.Peek());
+
+            IQueue<string> llq = new LinkedListQueue<string>();
+
+            Console.WriteLine(llq.Dequeue());
+            llq.Enqueue("first");
+            llq.Print();
+            llq.Enqueue("second");
+            llq.Print();
+            llq.Enqueue("third");
+            llq.Print();
+            llq.Enqueue("forth");
+            llq.Print();
+            Console.WriteLine(llq.Dequeue());
+            llq.Print();
+            Console.WriteLine(llq.Dequeue());
+            llq.Print();
+            Console.WriteLine(llq.Peek());
         }
     }
 }

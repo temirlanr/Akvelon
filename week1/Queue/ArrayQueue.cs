@@ -6,38 +6,30 @@ using System.Threading.Tasks;
 
 namespace Queue
 {
-    public interface IQueue<T>
-    {
-        void Enqueue(T value);
-        T? Dequeue();
-        T? Peek();
-        void Print();
-    }
-
-    public class Queue<T> : IQueue<T>
+    public class ArrayQueue<T> : IQueue<T>
     {
         private int size = 0;
         private T[] ts = new T[0];
 
         public T? Dequeue()
         {
-            if(size == 0)
+            if (size == 0)
             {
                 return default;
             }
 
+            var firstItem = ts[0];
+            ts = ts.Where((e, i) => i != 0).ToArray();
             size = size - 1;
-            var lastItem = ts[size];
-            ts = ts.Where((e, i) => i != size).ToArray();
 
-            return lastItem;
+            return firstItem;
         }
 
         public void Enqueue(T value)
         {
             T[] temp = new T[size];
 
-            if(size > 0)
+            if (size > 0)
             {
                 temp = (T[])ts.Clone();
             }
@@ -45,14 +37,14 @@ namespace Queue
             size = size + 1;
             ts = new T[size];
 
-            for(int i = 0; i < size - 1; i++) { ts[i] = temp[i]; }
+            for (int i = 0; i < size - 1; i++) { ts[i] = temp[i]; }
 
             ts[size - 1] = value;
         }
 
         public T? Peek()
         {
-            if(size == 0)
+            if (size == 0)
             {
                 return default;
             }
@@ -62,7 +54,7 @@ namespace Queue
 
         public void Print()
         {
-            foreach(var item in ts)
+            foreach (var item in ts)
             {
                 Console.WriteLine(item.ToString());
             }
