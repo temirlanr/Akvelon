@@ -54,6 +54,11 @@ namespace Fraction
 
         public void Divide(Fraction fraction)
         {
+            if(fraction.numerator == 0)
+            {
+                throw new DivideByZeroException("Cannot divide by 0");
+            }
+
             numerator *= fraction.denominator;
             denominator *= fraction.numerator;
         }
