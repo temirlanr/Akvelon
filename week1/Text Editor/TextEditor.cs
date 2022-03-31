@@ -31,6 +31,7 @@ namespace Text_Editor
         {
             var command = new MoveCursorClass(this, row, col);
             command.Execute();
+            _undoneCommands.Clear();
             _commandHistory.Push(command);
         }
 
@@ -38,6 +39,7 @@ namespace Text_Editor
         {
             var command = new InsertCharClass(this, c);
             command.Execute();
+            _undoneCommands.Clear();
             _commandHistory.Push(command);
         }
 
@@ -45,6 +47,7 @@ namespace Text_Editor
         {
             var command = new DeleteCharClass(this);
             command.Execute();
+            _undoneCommands.Clear();
             _commandHistory.Push(command);
         }
 
@@ -239,7 +242,7 @@ namespace Text_Editor
                 }
                 else
                 {
-                    editor._col = 2;
+                    editor._col = 1;
                     editor._row = editor._row + 1;
                 }
                 
@@ -262,16 +265,6 @@ namespace Text_Editor
 
                 editor.RotateLeft(editor._row, editor._col - 1);
 
-                if (editor._col - 1 == 0)
-                {
-                    editor._row = editor._row - 1;
-                    editor._col = editor._maxCols - 1;
-                }
-                else
-                {
-                    editor._col = editor._col - 1;
-                }
-
                 editor._row = previousR;
                 editor._col = previousC;
             }
@@ -290,6 +283,12 @@ namespace Text_Editor
                 this.editor = editor;
                 previousR = editor._row;
                 previousC = editor._col;
+
+                if (editor._col == 1)
+                {
+                    return;
+                }
+
                 deletedChar = editor._text[editor._row-1, editor._col-2];
             }
 
@@ -327,16 +326,6 @@ namespace Text_Editor
                 editor.RotateRight(editor._row, editor._col);
 
                 editor._text[editor._row - 1, editor._col - 1] = deletedChar;
-
-                if (editor._col < editor._maxCols)
-                {
-                    editor._col = editor._col + 1;
-                }
-                else
-                {
-                    editor._col = 2;
-                    editor._row = editor._row + 1;
-                }
 
                 editor._row = previousR;
                 editor._col = previousC;

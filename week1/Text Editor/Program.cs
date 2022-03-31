@@ -15,6 +15,9 @@
             editor.Undo();
             editor.Print();
             Console.WriteLine(" <= Undo()");
+            editor.InsertChar('l');
+            editor.Print();
+            Console.WriteLine(" <= InsertChar(l)");
             editor.Redo();
             editor.Print();
             Console.WriteLine(" <= Redo()");
@@ -39,7 +42,34 @@
             Console.WriteLine(" <= Redo()");
             editor.DeleteChar();
             editor.Print();
+            editor.MoveCursorTo(1, 4);
+            Console.WriteLine(" <= MoveCursorTo(1, 4), DeleteChar()");
+            editor.DeleteChar();
+            editor.Print();
             Console.WriteLine(" <= DeleteChar()");
+            editor.DeleteChar();
+            editor.Print();
+            Console.WriteLine(" <= DeleteChar()");
+            editor.DeleteChar();
+            editor.Print();
+            Console.WriteLine(" <= DeleteChar()");
+
+            for (int i=0; i<50; i++)
+            {
+                editor.InsertChar('a');
+            }
+
+            editor.InsertChar('a');
+            editor.InsertChar('a');
+
+            Console.WriteLine(editor.GetChar(1, 50));
+            Console.WriteLine(editor.GetChar(2, 1));
+
+            editor.DeleteChar();
+            editor.DeleteChar();
+
+            Console.WriteLine(editor.GetChar(2, 1));
+            Console.WriteLine(editor.GetChar(2, 2));
         }
     }
 }
