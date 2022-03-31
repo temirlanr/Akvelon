@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Queue
+namespace QueueNamespace
 {
     public class Program
     {

@@ -91,6 +91,15 @@ namespace Text_Editor
             return _text[row-1, col-1];
         }
 
+        public int[] GetCurrentCursorPosition()
+        {
+            int[] res = new int[2];
+            res[0] = _row;
+            res[1] = _col;
+
+            return res;
+        }
+
         private void RotateLeft(int initR, int initC)
         {
             for (int i = initR - 1; i < _maxRows; i++)

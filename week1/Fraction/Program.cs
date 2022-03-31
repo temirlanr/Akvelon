@@ -1,4 +1,4 @@
-﻿namespace Fraction
+﻿namespace FractionNamespace
 {
     public class Program
     {
@@ -35,9 +35,10 @@
             Console.WriteLine("fraction4 after division:");
             fraction4.Print();
 
-            Console.WriteLine(fraction4.ToDouble());
+            Console.WriteLine(fraction3.ToDouble());
 
             Console.WriteLine("Checking if fraction can be divided by 0:");
+            
             try
             {
                 fraction1.Divide(fraction4);
@@ -46,7 +47,12 @@
             {
                 Console.WriteLine(ex.Message);
             }
+
             fraction1.Print();
+
+            var temp = (double)fraction1;
+
+            Console.WriteLine(temp);
         }
     }
 }

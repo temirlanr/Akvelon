@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fraction
+namespace FractionNamespace
 {
     public class Fraction
     {
@@ -24,11 +24,19 @@ namespace Fraction
             this.denominator = denominator / gcd;
         }
 
+        public static implicit operator double(Fraction f) => (double)f.numerator / f.denominator;
+
+        public override string ToString()
+        {
+            return $"{numerator}/{denominator}";
+        }
+
         public void Add(Fraction fraction)
         {
             if (denominator == fraction.denominator)
             {
                 numerator += fraction.numerator;
+                return;
             }
 
             numerator = numerator * fraction.denominator + fraction.numerator * denominator;
@@ -40,6 +48,7 @@ namespace Fraction
             if (denominator == fraction.denominator)
             {
                 numerator -= fraction.numerator;
+                return;
             }
 
             numerator = numerator * fraction.denominator - fraction.numerator * denominator;
@@ -65,7 +74,7 @@ namespace Fraction
 
         public double ToDouble()
         {
-            return numerator / denominator;
+            return (double)numerator / denominator;
         }
 
         private static int GCD(int a, int b)

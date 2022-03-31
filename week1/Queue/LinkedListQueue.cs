@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Queue
+namespace QueueNamespace
 {
     public class LinkedListQueue<T> : IQueue<T>
     {
-        private LinkedList<T> ts = new LinkedList<T>();
+        private readonly LinkedList<T> ts = new();
 
         public T? Dequeue()
         {
-            if (ts.Count == 0)
+            if (!ts.Any())
             {
                 return default;
             }
 
-            var firstItem = ts.FirstOrDefault();
+            var firstItem = ts.First();
             ts.RemoveFirst();
 
             return firstItem;
