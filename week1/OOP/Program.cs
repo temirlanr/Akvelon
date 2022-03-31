@@ -1,5 +1,4 @@
 ﻿using OOP.Models;
-using OOP.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +11,6 @@ namespace OOP
     {
         public static void Main(string[] args)
         {
-            IStudentService studentService = new StudentService();
-            ITeacherService teacherService = new TeacherService();
-            ILessonService lessonService = new LessonService();
-
             var students = new List<Student>
             {
                 new Student {StudentName = "Craig"},
@@ -54,10 +49,10 @@ namespace OOP
                 new Lesson {LessonName = "4"},
             };
 
-            studentService.AddStudentToCourse(courses[0], students[0]);
-            studentService.AddStudentToCourse(courses[0], students[1]);
-            teacherService.GiveCourseScore(students[0], courses[0], 67);
-            teacherService.GiveCourseScore(students[1], courses[0], 80);
+            TrainingCenter.AddStudentToCourse(courses[0], students[0]);
+            TrainingCenter.AddStudentToCourse(courses[0], students[1]);
+            TrainingCenter.GiveCourseScore(students[0], courses[0], 67);
+            TrainingCenter.GiveCourseScore(students[1], courses[0], 80);
 
             foreach (var student in courses[0].CourseStudents)
             {

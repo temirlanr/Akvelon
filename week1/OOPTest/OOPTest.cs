@@ -1,47 +1,41 @@
 using Xunit;
-using OOP.Services;
 using OOP.Models;
 using System;
+using OOP;
 
 namespace OOPTest
 {
     public class OOPTest
     {
         [Fact]
-        public void AddStudentToCourse_JohnMaths_True()
+        public void AddStudentToCourse_StudentCourseEqualCourse()
         {
-            IStudentService studentService = new StudentService();
-
             Student student = new Student();
             student.StudentName = "John";
             Course course = new Course();
             course.CourseName = "Maths";
 
-            bool res = studentService.AddStudentToCourse(course, student);
+            TrainingCenter.AddStudentToCourse(course, student);
 
-            Assert.True(res);
+            Assert.Equal(student.StudentCourses[0], course);
         }
 
         [Fact]
-        public void AddStudentToCourse_nullnull_ThrowsArgumentNullException()
+        public void AddStudentToCourse_NullValues_ThrowsArgumentNullException()
         {
-            IStudentService studentService = new StudentService();
-
             Student student = new Student();
             student.StudentName = null;
             Course course = new Course();
             course.CourseName = null;
 
-            Action act = () => studentService.AddStudentToCourse(course, student);
+            Action act = () => TrainingCenter.AddStudentToCourse(course, student);
 
             Assert.Throws<ArgumentNullException>(act);
         }
 
         [Fact]
-        public void GiveCourseScore_JohnMaths76_True()
+        public void GiveCourseScore_ScoreEqualsCourseStudentScore()
         {
-            ITeacherService teacherService = new TeacherService();
-
             Teacher teacher = new Teacher();
             teacher.TeacherName = "Scott";
             Student student = new Student();
@@ -49,53 +43,48 @@ namespace OOPTest
             Course course = new Course();
             course.CourseName = "Maths";
 
-            bool res = teacherService.GiveCourseScore(student, course, 76);
+            TrainingCenter.AddCourseToTeacher(teacher, course);
+            TrainingCenter.GiveCourseScore(student, course, 76);
 
-            Assert.True(res);
+            Assert.Equal(76, course.CourseStudents[student]);
         }
 
         [Fact]
-        public void CreateLesson_Mathsnull_ThrowsArgumentNullException()
+        public void AddLessonToCourse_NullLesson_ThrowsArgumentNullException()
         {
-            ILessonService lessonService = new LessonService();
-
             Course course = new Course();
             course.CourseName = "Maths";
             Lesson lesson = new Lesson();
             lesson.LessonName = null;
 
-            Action act = () => lessonService.CreateLesson(course, lesson);
+            Action act = () => TrainingCenter.AddLessonToCourse(course, lesson);
 
             Assert.Throws<ArgumentNullException>(act);
         }
 
         [Fact]
-        public void RemoveStudentFromCourse_JohnMaths_True()
+        public void RemoveStudentFromCourse_StudentCourseIsNull()
         {
-            IStudentService studentService = new StudentService();
-
             Student student = new Student();
             student.StudentName = "John";
             Course course = new Course();
             course.CourseName = "Maths";
 
-            studentService.AddStudentToCourse(course, student);
-            bool res = studentService.RemoveStudentFromCourse(course, student);
+            TrainingCenter.AddStudentToCourse(course, student);
+            TrainingCenter.RemoveStudentFromCourse(course, student);
 
-            Assert.True(res);
+            Assert.Empty(student.StudentCourses);
         }
 
         [Fact]
-        public void AddCourseToTeacher_ScottStringEmpty_ThrowsArgumentNullException()
+        public void AddCourseToTeacher_StringEmpty_ThrowsArgumentNullException()
         {
-            ITeacherService teacherService = new TeacherService();
-
             Teacher teacher = new Teacher();
             teacher.TeacherName = "Scott";
             Course course = new Course();
-            course.CourseName = String.Empty;
+            course.CourseName = string.Empty;
 
-            Action act = () => teacherService.AddCourseToTeacher(teacher, course);
+            Action act = () => TrainingCenter.AddCourseToTeacher(teacher, course);
 
             Assert.Throws<ArgumentNullException>(act);
         }
