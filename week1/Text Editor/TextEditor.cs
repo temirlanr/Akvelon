@@ -83,6 +83,11 @@ namespace Text_Editor
             }
         }
 
+        public char GetChar(int row, int col)
+        {
+            return _text[row-1, col-1];
+        }
+
         private void RotateLeft(int initR, int initC)
         {
             for (int i = initR - 1; i < _maxRows; i++)

@@ -6,20 +6,26 @@
         {
             var editor = new TextEditor(50, 50);
 
-            editor.InsertChar('f');
+            editor.InsertChar('h');
             editor.Print();
             Console.WriteLine();
-            editor.InsertChar('c');
+            editor.InsertChar('l');
             editor.Print();
             Console.WriteLine();
-            editor.InsertChar('k');
+            editor.InsertChar('l');
+            editor.Print();
+            Console.WriteLine();
+            editor.InsertChar('o');
             editor.Print();
             Console.WriteLine();
             editor.MoveCursorTo(1, 2);
-            editor.InsertChar('u');
+            editor.InsertChar('e');
             editor.Print();
             Console.WriteLine();
             editor.DeleteChar();
+            editor.Print();
+            Console.WriteLine();
+            editor.Undo();
             editor.Print();
             Console.WriteLine();
             editor.DeleteChar();
