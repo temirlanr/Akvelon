@@ -217,7 +217,6 @@ namespace Text_Editor
             private char c;
             private int previousR;
             private int previousC;
-            private char[,] previousText;
             private bool executed = false;
 
             public InsertCharClass(TextEditor editor, char c)
@@ -226,7 +225,6 @@ namespace Text_Editor
                 this.c = c;
                 previousR = editor._row;
                 previousC = editor._col;
-                previousText = editor._text;
             }
 
             public void Execute()
@@ -255,7 +253,25 @@ namespace Text_Editor
                     return;
                 }
 
-                editor._text = previousText;
+                if (editor._row - 1 == 0 && editor._col - 1 == 0)
+                {
+                    return;
+                }
+
+                editor._text[editor._row - 1, editor._col - 2] = default;
+
+                editor.RotateLeft(editor._row, editor._col - 1);
+
+                if (editor._col - 1 == 0)
+                {
+                    editor._row = editor._row - 1;
+                    editor._col = editor._maxCols - 1;
+                }
+                else
+                {
+                    editor._col = editor._col - 1;
+                }
+
                 editor._row = previousR;
                 editor._col = previousC;
             }
@@ -266,7 +282,7 @@ namespace Text_Editor
             private TextEditor editor;
             private int previousR;
             private int previousC;
-            private char[,] previousText;
+            private char deletedChar;
             private bool executed = false;
 
             public DeleteCharClass(TextEditor editor)
@@ -274,7 +290,7 @@ namespace Text_Editor
                 this.editor = editor;
                 previousR = editor._row;
                 previousC = editor._col;
-                previousText = editor._text;
+                deletedChar = editor._text[editor._row-1, editor._col-2];
             }
 
             public void Execute()
@@ -308,7 +324,20 @@ namespace Text_Editor
                     return;
                 }
 
-                editor._text = previousText;
+                editor.RotateRight(editor._row, editor._col);
+
+                editor._text[editor._row - 1, editor._col - 1] = deletedChar;
+
+                if (editor._col < editor._maxCols)
+                {
+                    editor._col = editor._col + 1;
+                }
+                else
+                {
+                    editor._col = 2;
+                    editor._row = editor._row + 1;
+                }
+
                 editor._row = previousR;
                 editor._col = previousC;
             }
