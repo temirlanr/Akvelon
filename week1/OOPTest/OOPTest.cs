@@ -20,15 +20,19 @@ namespace OOPTest
         }
 
         [Fact]
-        public void GiveCourseScore_ScoreEqualsCourseStudentScore()
+        public void GiveLessonScore_ScoreEqualsCourseStudentScore()
         {
             Teacher teacher = new Teacher("Scott");
             Student student = new Student("John");
             Course course = new Course("Maths", teacher);
+            
+            student.AddToCourse(course);
 
-            teacher.GiveCourseScore(student, course, 76);
+            Lesson lesson = new Lesson("Integrals", course);
 
-            Assert.Equal(76, course.CourseStudents[student]);
+            teacher.GiveLessonScore(student, lesson, 76);
+
+            Assert.Equal(76, lesson.LessonStudents[student]);
         }
 
         [Fact]

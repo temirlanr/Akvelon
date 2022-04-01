@@ -25,8 +25,8 @@ namespace OOP.Models
                 lessonName = value;
             }
         }
-        private Dictionary<Student, int> students;
-        public Dictionary<Student, int> LessonStudents { get { return students; } }
+        private Dictionary<Student, double> students;
+        public Dictionary<Student, double> LessonStudents { get { return students; } }
         private Course course;
         public Course LessonCourse { get { return course; } }
 
@@ -38,7 +38,7 @@ namespace OOP.Models
             }
 
             lessonName = name;
-            students = new Dictionary<Student, int>();
+            students = new Dictionary<Student, double>();
             
             foreach(var item in course.CourseStudents)
             {

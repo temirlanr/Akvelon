@@ -39,7 +39,7 @@ namespace OOP.Models
             courses = new List<Course>();
         }
 
-        public void GiveCourseScore(Student student, Course course, int score)
+        public void GiveCourseScore(Student student, Course course)
         {
             if (!courses.Contains(course))
             {
@@ -60,16 +60,18 @@ namespace OOP.Models
             {
                 throw new ArgumentNullException("Course null");
             }
-            
-            if (score < 0 && score > 100)
+
+            double sum = 0;
+
+            foreach(var item in course.CourseLessons)
             {
-                throw new Exception("Score not in range 0-100");
+                sum = sum + item.LessonStudents[student];
             }
 
-            course.CourseStudents[student] = score;
+            course.CourseStudents[student] = sum / course.CourseLessons.Count;
         }
 
-        public void GiveLessonScore(Student student, Lesson lesson, int score)
+        public void GiveLessonScore(Student student, Lesson lesson, double score)
         {
             if (!courses.Contains(lesson.LessonCourse))
             {
