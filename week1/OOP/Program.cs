@@ -11,54 +11,19 @@ namespace OOP
     {
         public static void Main(string[] args)
         {
-            var students = new List<Student>
-            {
-                new Student {StudentName = "Craig"},
-                new Student {StudentName = "John"},
-                new Student {StudentName = null},
-                new Student {StudentName = "Katy"},
-                new Student {StudentName = "Dana"},
-                new Student {StudentName = "Catherine"},
-                new Student {StudentName = "Temirlan"},
-                new Student {StudentName = "Tyler"},
-                new Student {StudentName = "Madylin"},
-                new Student {StudentName = "Josh"}
-            };
+            var student1 = new Student("Josh");
+            var teacher1 = new Teacher("Nick");
+            var course1 = new Course("Maths", teacher1);
+            var lesson1 = new Lesson("Log", course1);
 
-            var teachers = new List<Teacher>
-            {
-                new Teacher {TeacherName = "Nick"},
-                new Teacher {TeacherName = "Jack"},
-                new Teacher {TeacherName = "Tina"}
-            };
+            student1.AddToCourse(course1);
+            Console.WriteLine(lesson1.LessonStudents[student1]);
 
-            var courses = new List<Course>
-            {
-                new Course {CourseName = "Maths"},
-                new Course {CourseName = "Geography"},
-                new Course {CourseName = "Physics"},
-                new Course {CourseName = "Biology"},
-                new Course {CourseName = "English"}
-            };
+            teacher1.GiveCourseScore(student1, course1, 80);
+            teacher1.GiveLessonScore(student1, lesson1, 76);
 
-            var lessons = new List<Lesson>
-            {
-                new Lesson {LessonName = "1"},
-                new Lesson {LessonName = "2"},
-                new Lesson {LessonName = "3"},
-                new Lesson {LessonName = "4"},
-            };
-
-            TrainingCenter.AddStudentToCourse(courses[0], students[0]);
-            TrainingCenter.AddStudentToCourse(courses[0], students[1]);
-            TrainingCenter.GiveCourseScore(students[0], courses[0], 67);
-            TrainingCenter.GiveCourseScore(students[1], courses[0], 80);
-
-            foreach (var student in courses[0].CourseStudents)
-            {
-                Console.WriteLine(student.Key.StudentName);
-                Console.WriteLine(student.Value);
-            }
+            Console.WriteLine(lesson1.LessonStudents[student1]);
+            Console.WriteLine(course1.CourseStudents[student1]);
         }
     }
 }

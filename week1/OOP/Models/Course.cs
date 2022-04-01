@@ -8,9 +8,53 @@ namespace OOP.Models
 {
     public class Course
     {
-        public string CourseName { get; set; }
-        public Dictionary<Student, int?> CourseStudents { get; set; } = new Dictionary<Student, int?>();
-        public List<Lesson> CourseLessons { get; set; } = new List<Lesson>();
-        public Teacher? CourseTeacher { get; set; }
+        private string courseName;
+        public string CourseName { 
+            get 
+            { 
+                return courseName; 
+            } 
+            set 
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException("name cannot be empty");
+                }
+
+                courseName = value; 
+            } 
+        }
+        private Dictionary<Student, int> students;
+        public Dictionary<Student, int> CourseStudents { get { return students; } }
+        private List<Lesson> lessons;
+        public List<Lesson> CourseLessons { get { return lessons; } }
+        private Teacher teacher;
+        public Teacher CourseTeacher { get { return teacher; } set { teacher = value; } }
+
+        public Course(string name, Teacher teacher)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name cannot be empty");
+            }
+
+            courseName = name;
+            students = new Dictionary<Student, int>();
+            lessons = new List<Lesson>();
+            this.teacher = teacher;
+            teacher.TeacherCourses.Add(this);
+        }
+
+        public void ChangeTeacher(Teacher teacher)
+        {
+            if (teacher == null)
+            {
+                throw new ArgumentNullException("Teacher null");
+            }
+
+            this.teacher.TeacherCourses.Remove(this);
+            this.teacher = teacher;
+            this.teacher.TeacherCourses.Add(this);
+        }
     }
 }

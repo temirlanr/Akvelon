@@ -8,8 +8,45 @@ namespace OOP.Models
 {
     public class Lesson
     {
-        public string LessonName { get; set; }
-        public Dictionary<Student, int?> LessonStudents { get; set; } = new Dictionary<Student, int?>();
-        public Course? LessonCourse { get; set; }
+        private string lessonName;
+        public string LessonName
+        {
+            get
+            {
+                return lessonName;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException("name cannot be empty");
+                }
+
+                lessonName = value;
+            }
+        }
+        private Dictionary<Student, int> students;
+        public Dictionary<Student, int> LessonStudents { get { return students; } }
+        private Course course;
+        public Course LessonCourse { get { return course; } }
+
+        public Lesson(string name, Course course)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name cannot be empty");
+            }
+
+            lessonName = name;
+            students = new Dictionary<Student, int>();
+            
+            foreach(var item in course.CourseStudents)
+            {
+                students.Add(item.Key, default);
+            }
+
+            this.course = course;
+            course.CourseLessons.Add(this);
+        }
     }
 }
