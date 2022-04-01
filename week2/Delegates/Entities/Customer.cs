@@ -8,15 +8,22 @@ namespace Delegates.Entities
 {
     public class Customer
     {
-        public string? FullName { get; set; }
-        public CustomerType Type { get; set; }
-        public string? Address { get; set; }
+        public string Name { get; private set; }
+        public CustomerType Type { get; private set; }
+        public string Address { get; private set; }
+
+        public Customer(string fullName, CustomerType customerType, string customerAddress)
+        {
+            Name = fullName;
+            Type = customerType;
+            Address = customerAddress;
+        }
     }
 
     public enum CustomerType
     {
         NewClient,
-        PermanentWithLargeOrders,
-        PermanentWithSmallOrders
+        PermanentWithSmallOrders,
+        PermanentWithLargeOrders
     }
 }

@@ -8,8 +8,15 @@ namespace Delegates.Entities
 {
     public class Order
     {
-        public int Id { get; set; }
-        public string? Date { get; set; }
-        public int Amount { get; set; }
+        public int Id { get; private set; }
+        public string Date { get; private set; }
+        public int Amount { get; private set; }
+
+        public Order(int orderNumber, string orderDate, int orderAmount)
+        {
+            Id = orderNumber;
+            Date = orderDate;
+            Amount = orderAmount;
+        }
     }
 }
