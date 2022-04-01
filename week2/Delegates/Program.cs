@@ -15,22 +15,20 @@ namespace Delegates
             Order order2 = new Order(2, "February 2, 2022", 123000);
             Order order3 = new Order(3, "March 1, 2022", 5000);
 
-            CustomerService service = new CustomerService();
+            Console.WriteLine($"New Customer, {newCustomer.Name}, Address: {newCustomer.Address}");
+            Console.WriteLine(newCustomer.CalculateTotal(order1));
+            Console.WriteLine(newCustomer.CalculateTotal(order2));
+            Console.WriteLine(newCustomer.CalculateTotal(order3));
 
-            Console.WriteLine("New Customer:");
-            Console.WriteLine(service.CalculateTotal(newCustomer, order1));
-            Console.WriteLine(service.CalculateTotal(newCustomer, order2));
-            Console.WriteLine(service.CalculateTotal(newCustomer, order3));
+            Console.WriteLine($"Permanent Customer with Small Orders, {smallCustomer.Name}, Address: {smallCustomer.Address}");
+            Console.WriteLine(smallCustomer.CalculateTotal(order1));
+            Console.WriteLine(smallCustomer.CalculateTotal(order2));
+            Console.WriteLine(smallCustomer.CalculateTotal(order3));
 
-            Console.WriteLine("Permanent Customer with Small Order:");
-            Console.WriteLine(service.CalculateTotal(smallCustomer, order1));
-            Console.WriteLine(service.CalculateTotal(smallCustomer, order2));
-            Console.WriteLine(service.CalculateTotal(smallCustomer, order3));
-
-            Console.WriteLine("Permanent Customer with Large Orders:");
-            Console.WriteLine(service.CalculateTotal(largeCustomer, order1));
-            Console.WriteLine(service.CalculateTotal(largeCustomer, order2));
-            Console.WriteLine(service.CalculateTotal(largeCustomer, order3));
+            Console.WriteLine($"Permanent Customer with Large Orders, {largeCustomer.Name}, Address: {largeCustomer.Address}");
+            Console.WriteLine(largeCustomer.CalculateTotal(order1));
+            Console.WriteLine(largeCustomer.CalculateTotal(order2));
+            Console.WriteLine(largeCustomer.CalculateTotal(order3));
         }
     }
 }
