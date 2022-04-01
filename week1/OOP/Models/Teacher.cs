@@ -46,6 +46,11 @@ namespace OOP.Models
                 return;
             }
 
+            if (!course.CourseStudents.ContainsKey(student))
+            {
+                return;
+            }
+
             if (student == null)
             {
                 throw new ArgumentNullException("Student null");
@@ -67,6 +72,11 @@ namespace OOP.Models
         public void GiveLessonScore(Student student, Lesson lesson, int score)
         {
             if (!courses.Contains(lesson.LessonCourse))
+            {
+                return;
+            }
+
+            if (!lesson.LessonStudents.ContainsKey(student))
             {
                 return;
             }
