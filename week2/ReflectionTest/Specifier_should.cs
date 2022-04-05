@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Documentation;
 using NUnit.Framework;
 
-namespace Documentation
+namespace ReflectionTest
 {
     [TestFixture]
     public class Specifier_should

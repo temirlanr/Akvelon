@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentation", "Documentation.csproj", "{0B862C17-75A5-4E48-B848-D5D3C8BFF6E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionTest", "..\ReflectionTest\ReflectionTest.csproj", "{33E8757F-4195-40F6-9372-95A207CE04F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{0B862C17-75A5-4E48-B848-D5D3C8BFF6E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B862C17-75A5-4E48-B848-D5D3C8BFF6E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B862C17-75A5-4E48-B848-D5D3C8BFF6E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33E8757F-4195-40F6-9372-95A207CE04F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E8757F-4195-40F6-9372-95A207CE04F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E8757F-4195-40F6-9372-95A207CE04F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33E8757F-4195-40F6-9372-95A207CE04F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27B05B95-625C-46EF-B3BD-BB785CD5966E}
 	EndGlobalSection
 EndGlobal
