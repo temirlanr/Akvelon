@@ -63,6 +63,7 @@ namespace Linq
             // alphabetical order, for identical country names - by store names
             // (also in alphabetical order), and for identical stores - by
             // increasing consumer codes. 
+
         }
     }
 }
