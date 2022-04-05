@@ -6,7 +6,7 @@ namespace Linq
     {
         public static void Main(string[] args)
         {
-            List<Store> stores = new List<Store>
+            List<Store> stores = new()
             {
                 new Store("TechnoDom"),
                 new Store("H&M"),
@@ -48,7 +48,21 @@ namespace Linq
                 new Purchase(consumerDiscounts[2], goodPrices[2], stores[2]),
             };
 
-            // I DONT UNDERStAND :()
+            // For each country (product manufactor) and each store, determine
+            // the consumer with the highest year of birth who bought one or
+            // more goods produced in this country in this store (first, the
+            // name of the country, then the name of the store, then the year
+            // of birth of the consumer, his code, and also the total cost
+            // goods from this country purchased in this store). If there is
+            // no information about sold goods for some "country-shop" pair,
+            // then data about this pair is not displayed. If for some pair
+            // "country-store" there are several consumers with the highest
+            // year of birth, then data about all such consumers should be
+            // displayed. Information about each triple "country-shop-consumer"
+            // should be displayed on a new line and sorted by country names in
+            // alphabetical order, for identical country names - by store names
+            // (also in alphabetical order), and for identical stores - by
+            // increasing consumer codes. 
         }
     }
 }
