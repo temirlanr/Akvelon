@@ -14,6 +14,11 @@ namespace Delegates.Entities
 
         public Order(int orderNumber, string orderDate, int orderAmount)
         {
+            if (orderAmount < 0)
+            {
+                throw new ArgumentException("Order amount should be positive.");
+            }
+
             Id = orderNumber;
             Date = orderDate;
             Amount = orderAmount;
