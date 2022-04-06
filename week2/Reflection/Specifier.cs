@@ -173,12 +173,6 @@ namespace Documentation
         public ApiMethodDescription GetApiMethodFullDescription(string methodName)
         {
             var type = typeof(T);
-            var res = new ApiMethodDescription
-            {
-                MethodDescription = new CommonDescription(),
-                ParamDescriptions = new ApiParamDescription[0],
-                ReturnDescription = new ApiParamDescription()
-            };
             var method = type.GetMethods().FirstOrDefault(m => m.Name == methodName);
 
             if (method == null)
@@ -188,7 +182,52 @@ namespace Documentation
 
             if (method.GetCustomAttributes().OfType<ApiMethodAttribute>().Any())
             {
-                
+                var pars = method.GetParameters();
+                var res = new ApiMethodDescription
+                {
+                    MethodDescription = new CommonDescription(methodName, GetApiMethodDescription(methodName)),
+                    ParamDescriptions = new ApiParamDescription[pars.Length]
+                };
+
+                for (int i=0; i<pars.Length; i++)
+                {
+                    res.ParamDescriptions[i] = GetApiMethodParamFullDescription(method.Name, pars[i].Name);
+                }
+
+                var returnAttributes = method.ReturnTypeCustomAttributes.GetCustomAttributes(true);
+
+                if (returnAttributes.Any())
+                {
+                    res.ReturnDescription = new ApiParamDescription
+                    {
+                        ParamDescription = new CommonDescription(),
+                        Required = false,
+                        MaxValue = null,
+                        MinValue = null
+                    };
+
+                    if (returnAttributes.OfType<ApiRequiredAttribute>().Any())
+                    {
+                        res.ReturnDescription.Required = returnAttributes
+                            .OfType<ApiRequiredAttribute>()
+                            .First()
+                            .Required;
+                    }
+
+                    if (returnAttributes.OfType<ApiIntValidationAttribute>().Any())
+                    {
+                        res.ReturnDescription.MinValue = returnAttributes
+                            .OfType<ApiIntValidationAttribute>()
+                            .First()
+                            .MinValue;
+                        res.ReturnDescription.MaxValue = returnAttributes
+                            .OfType<ApiIntValidationAttribute>()
+                            .First()
+                            .MaxValue;
+                    }
+                }
+
+                return res;
             }
 
             return null;
