@@ -18,6 +18,12 @@ namespace Linq
             ConsumerCode = consumer.ConsumerCode;
             ArticleNumber = good.ArticleNumber;
             StoreName = store.Name;
+
+            if(consumer.Discount == default)
+            {
+                TotalCost = good.Price;
+            }
+
             TotalCost = good.Price * consumer.Discount / 100;
         }
     }

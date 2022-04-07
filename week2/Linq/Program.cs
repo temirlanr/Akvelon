@@ -30,7 +30,7 @@ namespace Linq
             List<ConsumerDiscount> consumerDiscounts = new List<ConsumerDiscount>
             {
                 new ConsumerDiscount(consumers[0], stores[0], 10),
-                new ConsumerDiscount(consumers[1], stores[1], 4),
+                new ConsumerDiscount(consumers[1], stores[1], 6),
                 new ConsumerDiscount(consumers[2], stores[2], 20)
             };
 
@@ -45,7 +45,7 @@ namespace Linq
             {
                 new Purchase(consumerDiscounts[0], goodPrices[0], stores[0]),
                 new Purchase(consumerDiscounts[1], goodPrices[1], stores[1]),
-                new Purchase(consumerDiscounts[2], goodPrices[2], stores[2]),
+                new Purchase(consumerDiscounts[2], goodPrices[0], stores[0]),
             };
 
             // For each country (product manufactor) and each store, determine
@@ -63,7 +63,47 @@ namespace Linq
             // alphabetical order, for identical country names - by store names
             // (also in alphabetical order), and for identical stores - by
             // increasing consumer codes. 
+            var res = purchases.Join(consumers,
+                p => p.ConsumerCode,
+                c => c.ConsumerCode,
+                (purchase, consumer) => new
+                {
+                    consumer.ConsumerCode,
+                    consumer.YearOfBirth,
+                    purchase.ArticleNumber,
+                    purchase.StoreName,
+                    purchase.TotalCost
+                }).Join(goods,
+                pc => pc.ArticleNumber,
+                g => g.ArticleNumber,
+                (pc, good) => new
+                {
+                    good.ArticleNumber,
+                    good.CountryOfOrigin,
+                    pc.ConsumerCode,
+                    pc.YearOfBirth,
+                    pc.StoreName,
+                    pc.TotalCost
+                }).OrderBy(pcg => pcg.CountryOfOrigin)
+                .ThenBy(pcg => pcg.StoreName)
+                .GroupBy(pcg => new
+                {
+                    pcg.CountryOfOrigin,
+                    pcg.StoreName
+                }).Select(data => data.ToList().MaxBy(item => item.YearOfBirth))
+                .ToList().Select(item => new
+                {
+                    item.CountryOfOrigin,
+                    item.StoreName,
+                    item.YearOfBirth,
+                    item.ConsumerCode,
+                    item.TotalCost
+                });
 
+            foreach(var item in res)
+            {
+                Console.WriteLine(item.ToString());
+            }
         }
     }
 }
