@@ -17,7 +17,7 @@ namespace DelegatesTest
         }
 
         [Fact]
-        public void CalculateTotal_LargeCustomer_Equal15PercentDiscount()
+        public void CalculateTotal_LargeCustomer200000_Equal15PercentDiscount()
         {
             Customer largeCustomer = new Customer("Chris Pratt", CustomerType.PermanentWithLargeOrders, "Potter str. 19, Imaginary City");
             Order order2 = new Order(2, "February 2, 2022", 200000);
@@ -25,6 +25,28 @@ namespace DelegatesTest
             var res = largeCustomer.CalculateTotal(order2);
 
             Assert.Equal(170000, res);
+        }
+
+        [Fact]
+        public void CalculateTotal_SmallCustomer_Equal5PercentDiscount()
+        {
+            Customer smallCustomer = new Customer("Chris Pratt", CustomerType.PermanentWithSmallOrders, "Potter str. 19, Imaginary City");
+            Order order2 = new Order(2, "February 2, 2022", 10000);
+
+            var res = smallCustomer.CalculateTotal(order2);
+
+            Assert.Equal(9500, res);
+        }
+        
+        [Fact]
+        public void CalculateTotal_LargeCustomer50000_Equal10PercentDiscount()
+        {
+            Customer largeCustomer = new Customer("Chris Pratt", CustomerType.PermanentWithLargeOrders, "Potter str. 19, Imaginary City");
+            Order order2 = new Order(2, "February 2, 2022", 50000);
+
+            var res = largeCustomer.CalculateTotal(order2);
+
+            Assert.Equal(45000, res);
         }
     }
 }

@@ -21,34 +21,25 @@ namespace Delegates.Entities
 
         private delegate double Calculate(Order order);
 
-        private static double CalculationFormula(Order order, Calculate func)
+        private Dictionary<CustomerType, Calculate> delegates = new Dictionary<CustomerType, Calculate>
         {
-            return func(order);
-        }
-
+            [CustomerType.NewClient] = (order) => order.Amount * 1,
+            [CustomerType.PermanentWithSmallOrders] = (order) => order.Amount * 0.95,
+            [CustomerType.PermanentWithLargeOrders] = (order) =>
+            {
+                if (order.Amount > 100000)
+                {
+                    return order.Amount * 0.85;
+                }
+                else
+                {
+                    return order.Amount * 0.90;
+                }
+            }
+        };
         public double CalculateTotal(Order order)
         {
-            switch (Type)
-            {
-                case CustomerType.NewClient:
-                    return CalculationFormula(order, (order) => order.Amount * 1);
-                case CustomerType.PermanentWithSmallOrders:
-                    return CalculationFormula(order, (order) => order.Amount * 0.95);
-                case CustomerType.PermanentWithLargeOrders:
-                    return CalculationFormula(order, (order) =>
-                    {
-                        if (order.Amount > 100000)
-                        {
-                            return order.Amount * 0.85;
-                        }
-                        else
-                        {
-                            return order.Amount * 0.90;
-                        }
-                    });
-                default:
-                    return -1;
-            }
+            return delegates[Type](order);
         }
     }
 
