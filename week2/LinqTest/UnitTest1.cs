@@ -1,10 +1,13 @@
-﻿using System;
+using Linq;
+using System.Collections.Generic;
+using Xunit;
 
-namespace Linq
+namespace LinqTest
 {
-    public class Program
+    public class UnitTest1
     {
-        public static void Main(string[] args)
+        [Fact]
+        public void LinqSolution_TwoHighestYears_BothPresent()
         {
             List<Store> stores = new()
             {
@@ -24,7 +27,7 @@ namespace Linq
             {
                 new Good("AA234-7838", "PCs", "China"),
                 new Good("KD923-4821", "Clothes", "France"),
-                new Good("IA919-7211", "Toys", "USA")
+                new Good("IJ129-3328", "Toys", "Italy")
             };
 
             List<ConsumerDiscount> consumerDiscounts = new List<ConsumerDiscount>
@@ -48,27 +51,18 @@ namespace Linq
                 new Purchase(consumerDiscounts[2], goodPrices[0], stores[0]),
             };
 
-            // For each country (product manufactor) and each store, determine
-            // the consumer with the highest year of birth who bought one or
-            // more goods produced in this country in this store (first, the
-            // name of the country, then the name of the store, then the year
-            // of birth of the consumer, his code, and also the total cost
-            // goods from this country purchased in this store). If there is
-            // no information about sold goods for some "country-shop" pair,
-            // then data about this pair is not displayed. If for some pair
-            // "country-store" there are several consumers with the highest
-            // year of birth, then data about all such consumers should be
-            // displayed. Information about each triple "country-shop-consumer"
-            // should be displayed on a new line and sorted by country names in
-            // alphabetical order, for identical country names - by store names
-            // (also in alphabetical order), and for identical stores - by
-            // increasing consumer codes. 
+            var exp = new Solution
+            {
+                CountryOfOrigin = "China",
+                StoreName = "TechnoDom",
+                YearOfBirth = 1998,
+                ConsumerCode = 3,
+                TotalCost = 120000
+            };
+
             var res = Solution.LinqSolution(purchases, consumers, goods);
 
-            foreach(var item in res)
-            {
-                Console.WriteLine(item.ToString());
-            }
+            Assert.Equal(exp, res[1]);
         }
     }
 }
