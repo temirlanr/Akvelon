@@ -6,17 +6,11 @@ namespace ManagedThreading1
     {
         public static void Main(string[] args)
         {
-            Thread[] music = new Thread[3]
+            for(int i = 0; i < 30; i++)
             {
-                new Thread(Playlist) { Name = "Hardbass" },
-                new Thread(Playlist) { Name = "Latino" },
-                new Thread(Playlist) { Name = "Rock" }
-            };
-
-            for(int i = 0; i<30; i++)
-            {
-                var random = new Random();
-                var item = random.Next();
+                var rand = new Random();
+                var index = rand.Next(0, 3);
+                ChangeMusic(index);
             }
 
             Thread[] dancers = new Thread[10];
@@ -26,6 +20,20 @@ namespace ManagedThreading1
                 Thread dancer = new Thread(Dance) { Name = (i + 1).ToString() };
                 dancer.Start();
             }
+        }
+
+        delegate void Change();
+
+        static void ChangeMusic(int index)
+        {
+            Dictionary<int, Change> changers = new Dictionary<int, Change>
+            {
+                [0] = () => Thread.CurrentThread.Name = "Hardbass",
+                [1] = () => Thread.CurrentThread.Name = "Latino",
+                [2] = () => Thread.CurrentThread.Name = "Rock"
+            };
+            
+            changers[index]();
         }
 
         static void Dance()
@@ -44,12 +52,6 @@ namespace ManagedThreading1
             {
                 Console.WriteLine("Head dance");
             }
-        }
-
-        static void Playlist()
-        {
-            Console.WriteLine($"{Thread.CurrentThread.Name} song");
-            Thread.Sleep(10000);
         }
     }
 }
