@@ -10,46 +10,47 @@ namespace ManagingThread2
 {
     public class Solution
     {
-        public bool Start()
+        public bool Start(int threadNumber)
         {
-            Thread thread1 = new Thread(() => FindFileUrl(1, 1));
-            thread1.Start();
-            thread1.Join();
+            Thread[] threads = new Thread[threadNumber];
+            List<Photo> photos = GetAllPhotos("photos.json");
+
+            for(int i = 0; i < threadNumber; i++)
+            {
+                threads[i] = new Thread(() => Download(i, threadNumber, photos));
+                threads[i].Start();
+            }
 
             return true;
         }
 
-        public static void FindFileUrl(int albumId, int id)
+        public List<Photo> GetAllPhotos(string jsonFile)
         {
-            Thread.AllocateNamedDataSlot("ThumbnailUrl");
-            Thread.AllocateNamedDataSlot("FileName");
-
-            using (StreamReader r = new StreamReader(@"C:\Users\rsano\Akvelon\week3\ManagingThread2\photos.json"))
+            using (StreamReader r = new StreamReader(jsonFile))
             {
                 string json = r.ReadToEnd();
-                List<Photo> photos = JsonConvert.DeserializeObject<List<Photo>>(json);
-                foreach (var item in photos)
+                return JsonConvert.DeserializeObject<List<Photo>>(json);
+            }
+        }
+
+        public static void Download(int id, int diff, List<Photo> photos)
+        {
+            for (int i = id; i < photos.Count; i += diff)
+            {
+                using (WebClient client = new WebClient())
                 {
-                    if (item.albumId == albumId && item.id == id)
-                    {
-                        Thread.SetData(Thread.GetNamedDataSlot("ThumbnailUrl"), item.thumbnailUrl);
-                        string fileName = item.albumId.ToString() + "_" + item.id.ToString() + ".jpeg";
-                        Thread.SetData(Thread.GetNamedDataSlot("FileName"), fileName);
-                        DownloadFile();
-                    }
+                    client.DownloadFile(photos[i].thumbnailUrl, "../../../photos/" + RandomString(10) + ".jpeg");
                 }
             }
         }
 
-        private static void DownloadFile()
-        {
-            string fileUrl = (string)Thread.GetData(Thread.GetNamedDataSlot("ThumbnailUrl"));
-            string fileName = (string)Thread.GetData(Thread.GetNamedDataSlot("FileName"));
+        private static Random random = new Random();
 
-            using (WebClient client = new WebClient())
-            {
-                client.DownloadFile(fileUrl, @"C:\Users\rsano\Akvelon\week3\ManagingThread2\" + fileName);
-            }
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 

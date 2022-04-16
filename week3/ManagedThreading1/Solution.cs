@@ -8,40 +8,45 @@ namespace ManagedThreading1
 {
     public class Solution
     {
+        private Dictionary<int, string> changers = new Dictionary<int, string>
+        {
+            [0] = "Hardbass",
+            [1] = "Latino",
+            [2] = "Rock"
+        };
+
+        private AutoResetEvent m_unlock = new AutoResetEvent(false);
+
         public bool Start()
         {
-            Thread music = new Thread(() => ChangeMusic());
-            Thread dancer = new Thread(() => Dance(music));
+            Thread music = new Thread(() => ChangeMusic(changers));
             music.Start();
+            Thread dancer = new Thread(() => Dance(music));
             dancer.Start();
 
             return true;
         }
 
-        private static void ChangeMusic()
+        private void ChangeMusic(Dictionary<int, string> changers)
         {
             for (int i = 0; i < 30; i++)
             {
                 var rand = new Random();
                 var index = rand.Next(0, 3);
 
-                Dictionary<int, string> changers = new Dictionary<int, string>
-                {
-                    [0] = "Hardbass",
-                    [1] = "Latino",
-                    [2] = "Rock"
-                };
-
                 Thread.CurrentThread.Name = changers[index];
                 Console.WriteLine(Thread.CurrentThread.Name);
-                Thread.Sleep(10000);
+                m_unlock.Set();
+                Thread.Sleep(500);
             }
         }
 
-        private static void Dance(Thread music)
+        private void Dance(Thread music)
         {
-            for (int i = 0; i < 30; i++)
+            while (music.IsAlive)
             {
+                m_unlock.WaitOne();
+
                 if (music.Name == "Hardbass")
                 {
                     Console.WriteLine("Elbow dance");
@@ -56,8 +61,6 @@ namespace ManagedThreading1
                 {
                     Console.WriteLine("Head dance");
                 }
-
-                Thread.Sleep(3000);
             }
         }
     }

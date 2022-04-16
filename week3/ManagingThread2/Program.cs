@@ -10,7 +10,7 @@ namespace ManagingThread2
         {
             Solution solution = new Solution();
 
-            solution.Start();
+            solution.Start(32);
         }
     }
 }

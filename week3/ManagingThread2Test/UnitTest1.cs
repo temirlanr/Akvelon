@@ -1,4 +1,5 @@
 using ManagingThread2;
+using System;
 using Xunit;
 
 namespace ManagingThread2Test
@@ -10,7 +11,7 @@ namespace ManagingThread2Test
         {
             Solution solution = new Solution();
 
-            var res = solution.Start();
+            var res = solution.Start(32);
 
             Assert.True(res);
         }

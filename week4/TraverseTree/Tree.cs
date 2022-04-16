@@ -10,14 +10,27 @@ namespace TraverseTree
     {
         public Tree<T> Left;
         public Tree<T> Right;
-        public T Data;
+        public T Data { get; private set; }
+
+        public Tree(T data)
+        {
+            Data = data;
+            Left = null;
+            Right = null;
+        }
 
         public static void DoTree<T>(Tree<T> tree, Action<T> action)
         {
             if (tree == null) return;
-            DoTree(tree.Left, action);
-            DoTree(tree.Right, action);
-            action(tree.Data);
+
+            Task[] tasks = 
+            {
+                Task.Run(() => DoTree(tree.Left, action)),
+                Task.Run(() => DoTree(tree.Right, action)),
+                Task.Run(() => action(tree.Data))
+            };
+
+            Task.WaitAll(tasks);
         }
     }
 }
