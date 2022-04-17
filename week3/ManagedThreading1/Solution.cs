@@ -37,7 +37,15 @@ namespace ManagedThreading1
                 Thread.CurrentThread.Name = changers[index];
                 Console.WriteLine(Thread.CurrentThread.Name);
                 m_unlock.Set();
-                Thread.Sleep(500);
+
+                if (i == 30 - 1)
+                {
+                    Thread.EndThreadAffinity();
+                }
+                else
+                {
+                    Thread.Sleep(500);
+                }
             }
         }
 
