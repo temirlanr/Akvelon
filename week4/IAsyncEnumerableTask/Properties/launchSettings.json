@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "IAsyncEnumerableTask": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GitHubKey": "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"
+      }
+    }
+  }
+}
