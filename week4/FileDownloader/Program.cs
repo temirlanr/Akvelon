@@ -6,7 +6,7 @@ namespace FileDownloader
     {
         static void Main(string[] args)
         {
-            var result = Downloader.Download("http://dejanstojanovic.net/media/215073/optimize-jpg.zip", @"c:\temp\", 2);
+            var result = Downloader.Download("http://212.183.159.230/100MB.zip", "./", 16);
 
             Console.WriteLine($"Location: {result.FilePath}");
             Console.WriteLine($"Size: {result.Size}bytes");
