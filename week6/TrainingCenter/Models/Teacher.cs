@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,18 +10,22 @@ namespace TrainingCenter.Models
 {
     public class Teacher
     {
+        [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public List<Course> Courses { get; set; }
 
-        private readonly TCContext _context;
+        private readonly TCContext context;
 
-        public Teacher(TCContext context)
+        public Teacher(string name, TCContext context)
         {
-            _context = context;
+            Name = name;
+            this.context = context;
+            AddTeacher();
         }
 
-        public void AddCourse()
+        private void AddTeacher()
         {
             if (this == null)
             {
@@ -32,22 +37,32 @@ namespace TrainingCenter.Models
                 return;
             }
 
-            _context.Teachers.Add(this);
-            _context.SaveChanges();
+            context.Teachers.Add(this);
+            context.SaveChanges();
         }
 
-        public void DeleteCourse()
+        private Teacher GetTeacher()
+        {
+            return context.Teachers.FirstOrDefault(c => c.Id == Id);
+        }
+
+        private IEnumerable<Teacher> GetTeachers()
+        {
+            return context.Teachers.ToList();
+        }
+
+        private void DeleteTeacher()
         {
             if (this == null)
             {
                 return;
             }
 
-            _context.Teachers.Remove(this);
-            _context.SaveChanges();
+            context.Teachers.Remove(this);
+            context.SaveChanges();
         }
 
-        public void UpdateCourse()
+        private void UpdateTeacher()
         {
             if (this == null)
             {
@@ -59,8 +74,8 @@ namespace TrainingCenter.Models
                 return;
             }
 
-            _context.Teachers.Update(this);
-            _context.SaveChanges();
+            context.Teachers.Update(this);
+            context.SaveChanges();
         }
     }
 }

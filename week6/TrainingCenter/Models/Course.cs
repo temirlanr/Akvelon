@@ -20,14 +20,23 @@ namespace TrainingCenter.Models
         public Teacher Teacher { get; set; }
         public int TeacherId { get; set; }
 
-        private readonly TCContext _context;
+        private readonly TCContext context;
 
-        public Course(TCContext context)
+        public Course(string name, int teacherId, TCContext context)
         {
-            _context = context;
+            Name = name;
+            TeacherId = teacherId;
+            this.context = context;
+            AddCourse();
         }
 
-        public void AddCourse()
+        public void ChangeTeacher(int teacherId)
+        {
+            TeacherId = teacherId;
+            UpdateCourse();
+        }
+
+        private void AddCourse()
         {
             if (this == null)
             {
@@ -39,22 +48,32 @@ namespace TrainingCenter.Models
                 return;
             }
 
-            _context.Courses.Add(this);
-            _context.SaveChanges();
+            context.Courses.Add(this);
+            context.SaveChanges();
         }
 
-        public void DeleteCourse()
+        private Course GetCourse()
+        {
+            return context.Courses.FirstOrDefault(c => c.Id == Id);
+        }
+
+        private IEnumerable<Course> GetCourses()
+        {
+            return context.Courses.ToList();
+        }
+
+        private void DeleteCourse()
         {
             if (this == null)
             {
                 return;
             }
 
-            _context.Courses.Remove(this);
-            _context.SaveChanges();
+            context.Courses.Remove(this);
+            context.SaveChanges();
         }
 
-        public void UpdateCourse()
+        private void UpdateCourse()
         {
             if (this == null)
             {
@@ -66,8 +85,8 @@ namespace TrainingCenter.Models
                 return;
             }
 
-            _context.Courses.Update(this);
-            _context.SaveChanges();
+            context.Courses.Update(this);
+            context.SaveChanges();
         }
     }
 }

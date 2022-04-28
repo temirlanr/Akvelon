@@ -13,8 +13,9 @@ namespace TrainingCenter.Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseGrade> CourseGrades { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<LessonGrade> LessonsGrades { get; set; }
+        public DbSet<LessonGrade> LessonGrades { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
